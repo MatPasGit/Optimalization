@@ -1,16 +1,17 @@
-# This is a sample Python script.
+#Quadratic Assignment Problem QAP
+import random
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+problem_size=20;
 
+def init_problem_instance(p_size):
+    starting_instance = list(range(p_size))
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+    #shuffle starting point
+    random.shuffle(starting_instance)
 
+    return starting_instance
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    print(init_problem_instance(problem_size))
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
