@@ -1,5 +1,6 @@
 import random
 
+#tested
 def init_problem_instance(p_size):
     starting_instance = list(range(p_size))
 
@@ -8,14 +9,15 @@ def init_problem_instance(p_size):
 
     return starting_instance
 
+#tested
 def objective_function(instance,flow, distance ):
     objective = 0
 
     if isinstance(flow, list) and isinstance(instance,list) and isinstance(distance,list):
 
-        for i in range(0 ,instance.size()):
+        for i in range(0 ,len(instance) ):
             j = i+1
-            if i == instance.size()-1:
+            if i == len(instance) -1:
                 j=0
 
             objective += flow[instance[i]][instance[j]]*distance[i][j]
