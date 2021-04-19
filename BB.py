@@ -44,7 +44,8 @@ class BranchAndBound:
         UB=0 #DO POPRAWY JAK PIERON
         #Queue
         for x in range(0, self.size ):
-            self.resolutionsQueue.put(x)
+            temp_instance=[[x],UB] #TU POWINNO SIE LICZYC PIERWSZA WARTOSC ZAMIAST UB
+            self.resolutionsQueue.put(temp_instance)
 
         while( self.resolutionsQueue.empty() != True ):
 
