@@ -38,11 +38,27 @@ class BranchAndBound:
         return 0
 
     def solve(self):
+        resolution = []
         #starting solution
         #UB count
+        UB=0 #DO POPRAWY JAK PIERON
         #Queue
         for x in range(0, self.size ):
             self.resolutionsQueue.put(x)
 
         while( self.resolutionsQueue.empty() != True ):
+
+            instance = self.resolutionsQueue.get()
+
+            # if is leave
+            if(len(instance) == self.size):
+                inst_value = objective_function(instance,self.flowList, self.distanceList)
+                if( inst_value < UB ):
+                    resolution  = instance
+                    UB  = inst_value
+            else:
+                for x in range(0,self.size):
+                    #uzupełnij dzieci poprzedniego ale dupiato narazie to jest
+
+
             return 0
