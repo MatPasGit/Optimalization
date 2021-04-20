@@ -17,15 +17,10 @@ class BranchAndBound:
 
     #methods
 
-    def  __init__(self, initRandomInstance,w,d):
-        self.instance = initRandomInstance
+    def  __init__(self, w,d):
         self.flowList = w
         self.distanceList = d
         self.size = len(w)
-        self.initLowerBound()
-
-    def initLowerBound(self):
-        self.lowerBound = objective_function(self.instance, self.flowList, self.distanceList)
 
     def initUpperBound(self):
         best = 0
@@ -41,8 +36,6 @@ class BranchAndBound:
                 best = problem_value
 
         self.upperBound = best
-
-
 
     def solve(self):
 

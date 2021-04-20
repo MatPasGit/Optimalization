@@ -27,24 +27,19 @@ def generatorInstancji(Z,n):
     return w,d
 
 if __name__ == '__main__':
-
     #w - macierz przeplywów
     #d - macierz odległości
     w,d = generatorInstancji(20, problem_size)
     #print(np.matrix(w))
-    #print(np.matrix(d))
 
-    instance = init_problem_instance(problem_size)
-    result = objective_function(instance, w,d)
-
-    lets_solve = BranchAndBound(instance, w, d)
+    lets_solve = BranchAndBound(w, d)
     lets_solve.solve()
 
     print("resolution:" , lets_solve.upperBound)
     print("instance: ", lets_solve.instance)
     print("how much similar results? : ", lets_solve.same_value_solution)
 
-    lets_solveBS = BS(instance, w, d)
+    lets_solveBS = BS(w, d)
     lets_solveBS.solve()
 
     print("BS resolution:" , lets_solve.upperBound)
