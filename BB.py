@@ -33,6 +33,7 @@ class BranchAndBound:
 
 
     def initUpperBound(self):
+        return 0
 
     def countUpperBound(self):
         return 0
@@ -60,6 +61,5 @@ class BranchAndBound:
             else:
                 for x in range(0,self.size):
                     #uzupełnij dzieci poprzedniego ale dupiato narazie to jest
-
-
-            return 0
+                    print()
+        return 0
