@@ -12,7 +12,7 @@ def init_problem_instance(p_size):
 #tested
 def objective_function(instance, flow, distance ):
     objective = 0
-
+    
     if isinstance(flow, list) and isinstance(instance,list) and isinstance(distance,list):
 
         for i in range(0 ,len(instance)):

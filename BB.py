@@ -39,7 +39,7 @@ class BranchAndBound:
 
     def solve(self):
 
-        #inicjowanie potencjalnie najlepszego rozwiazania
+        #inicjowanie potencjalnie najlepszego rozwiazania (najlepsze rozwiązanie z kilku losowych)
         self.initUpperBound()
 
         for x in range(0, self.size ): #dodaj pierwsze node'y

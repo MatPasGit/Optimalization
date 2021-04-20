@@ -1,6 +1,5 @@
 #Quadratic Assignment Problem QAP
 
-#imports
 from functions import *
 from BB import *
 from BS import *
@@ -9,10 +8,6 @@ import numpy as np
 from matplotlib import cm
 import matplotlib.pyplot as plt
 import time
-
-
-#global vars
-problem_size=9
 
 def generatorInstancji(Z,n):
     generator = RandomNumberGenerator(Z)

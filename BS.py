@@ -27,10 +27,6 @@ class BS:
         self.flowList = w
         self.distanceList = d
         self.size = len(w)
-        self.initLowerBound()
-
-    def initLowerBound(self):
-        self.lowerBound = objective_function(self.instance, self.flowList, self.distanceList)
 
     def initUpperBound(self):
         best = 0
@@ -97,16 +93,17 @@ class BS:
                         if best_child == [] : # jesli pusty to ustaw pierwszy
                             best_child = copy.copy(child)
                             best = objective_function(best_child, self.flowList, self.distanceList)
-                            c = objective_function(child, self.flowList, self.distanceList)
+                        
+                        c = objective_function(child, self.flowList, self.distanceList)
 
                         if  c < best:
                             best_child = copy.copy(child)
-                            best = c #Najlepsze dziecko dziecka
+                            best = c #Najlepsze dziecko dziecka (najlepszy wnuk)
 
                     best_kids_of_all_time.append(Node(best_child, best))
 
                 newlist = sorted(best_kids_of_all_time, key=operator.attrgetter("value"))
-
+                print(newlist)
                 elements_count = int((len(newlist) * (self.percentage_acceptable/100) )) + 1
 
                 for x in range(0,elements_count):
