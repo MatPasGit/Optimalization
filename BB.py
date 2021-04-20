@@ -24,6 +24,8 @@ class BranchAndBound:
         self.size = len(w)
         self.initLowerBound()
 
+    def initLowerBound(self):
+        self.lowerBound = objective_function(self.instance, self.flowList, self.distanceList)
 
     def initUpperBound(self):
         best = 0
@@ -57,8 +59,8 @@ class BranchAndBound:
 
             if(len(instance.node_list) == self.size): #jesli jest lisciem
                 if instance.value < self.upperBound : # jezeli rozwiazanie lepsze to je zapisz
-                    self.instance = instance.node_list
-                    self.upperBound = instance.value
+                    self.instance = copy.copy(instance.node_list)
+                    self.upperBound = copy.copy(instance.value)
                     self.same_value_solution = 0
                     print("New value: ", self.upperBound, "New best sequence", self.instance)
                 if instance.value == self.upperBound:
