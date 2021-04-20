@@ -23,8 +23,7 @@ class BS:
 
     #methods
 
-    def  __init__(self, initRandomInstance,w,d):
-        self.instance = initRandomInstance
+    def  __init__(self,w,d):
         self.flowList = w
         self.distanceList = d
         self.size = len(w)
