@@ -103,7 +103,6 @@ class BS:
                     best_kids_of_all_time.append(Node(best_child, best))
 
                 newlist = sorted(best_kids_of_all_time, key=operator.attrgetter("value"))
-                print(newlist)
                 elements_count = int((len(newlist) * (self.percentage_acceptable/100) )) + 1
 
                 for x in range(0,elements_count):
