@@ -34,6 +34,7 @@ class BranchAndBound:
 
 
     def initUpperBound(self):
+        return 0
 
     def countUpperBound(self):
         return 0
@@ -69,4 +70,4 @@ class BranchAndBound:
 
 
 
-            return 0
+        return 0
