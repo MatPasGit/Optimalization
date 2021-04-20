@@ -8,8 +8,7 @@ from RandomNumberGenerator import *
 import numpy as np
 
 #global vars
-problem_size=3
-
+problem_size=5
 
 def generatorInstancji(Z,n):
     generator = RandomNumberGenerator(Z)

@@ -10,17 +10,14 @@ def init_problem_instance(p_size):
     return starting_instance
 
 #tested
-def objective_function(instance,flow, distance ):
+def objective_function(instance, flow, distance ):
     objective = 0
 
     if isinstance(flow, list) and isinstance(instance,list) and isinstance(distance,list):
 
-        for i in range(0 ,len(instance) ):
-            j = i+1
-            if i == len(instance) -1:
-                j=0
-
-            objective += flow[instance[i]][instance[j]]*distance[i][j]
+        for i in range(0 ,len(instance)):
+            for j in range(i+1,len(instance)):
+                objective += flow[instance[i]][instance[j]]*distance[i][j]
 
         return objective
     else:
