@@ -32,14 +32,13 @@ class BranchAndBound:
         lb = objective_function(instance, self.flowList, self.distanceList)
         return lb
 
-
     def initUpperBound(self):
         best = 0
-        for x in range(0,9):
+        for x in range(0, 9):
             problem_list = init_problem_instance(self.size)
 
             if x == 0:
-                best =  objective_function(problem_list, self.flowList, self.distanceList)
+                best = objective_function(problem_list, self.flowList, self.distanceList)
                 continue
 
             problem_value = objective_function(problem_list, self.flowList, self.distanceList)
@@ -52,17 +51,16 @@ class BranchAndBound:
         return 0
 
     def solve(self):
-        resolution = []
-        #starting solution
-        #UB count
-        UB=0 #DO POPRAWY JAK PIERON
+
+
+
         #Queue
 
         #inicjowanie potencjalnie najlepszego rozwiazania
         self.initUpperBound()
 
         for x in range(0, self.size ):
-            temp_instance=Node([x],objective_function([x],self.flowList, self.distanceList)) #TU POWINNO SIE LICZYC PIERWSZA WARTOSC ZAMIAST UB
+            temp_instance=Node([x], objective_function([x],self.flowList, self.distanceList))
             self.resolutionsQueue.put(temp_instance)
 
         while( self.resolutionsQueue.empty() != True ):
@@ -70,18 +68,19 @@ class BranchAndBound:
             instance = self.resolutionsQueue.get()
 
             # if is leave
-            if(len(instance) == self.size): #jesli jest lisciem
-                inst_value = objective_function(instance,self.flowList, self.distanceList)
-                if( inst_value < UB ):
-                    resolution  = instance
-                    UB  = inst_value
+            if(len(instance.node_list) == self.size): #jesli jest lisciem
+
+                if instance.value < self.upperBound :
+                    self.instance = instance.node_list
+                    self.upperBound  = instance.value
+                    print("New value: ", self.upperBound, "New best sequence", self.instance)
             else:
                 for x in range(0,self.size):
                     if x in instance: #jesli zaklad zostal juz przydzielony
                         continue
                     child_list = instance.node_list
                     child_list.append()
-                    child = Node(child_list, objective_function(child_list,self.flowList, self.distanceList ))
+                    child = Node(child_list, objective_function(child_list,self.flowList, self.distanceList))
                     self.resolutionsQueue.put()
 
 
