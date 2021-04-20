@@ -1,4 +1,5 @@
 #imports
+import copy
 import queue
 from functions import *
 from Node import *
@@ -24,14 +25,6 @@ class BranchAndBound:
         self.initLowerBound()
 
 
-
-    def initLowerBound(self):
-        self.lowerBound = objective_function(self.instance,self.flowList,self.distanceList)
-
-    def countLowerBound(self,instance):
-        lb = objective_function(instance, self.flowList, self.distanceList)
-        return lb
-
     def initUpperBound(self):
         best = 0
         for x in range(0, 9):
@@ -47,8 +40,7 @@ class BranchAndBound:
 
         self.upperBound = best
 
-    def countUpperBound(self):
-        return 0
+
 
     def solve(self):
 
@@ -63,9 +55,7 @@ class BranchAndBound:
 
             instance = self.resolutionsQueue.get()
 
-            # if is leave
             if(len(instance.node_list) == self.size): #jesli jest lisciem
-
                 if instance.value < self.upperBound : # jezeli rozwiazanie lepsze to je zapisz
                     self.instance = instance.node_list
                     self.upperBound = instance.value
@@ -79,11 +69,13 @@ class BranchAndBound:
                     if x in instance.node_list: #jesli zaklad zostal juz przydzielony pomiń
                         continue
 
-                    child_list = instance.node_list
+                    child_list = copy.copy(instance.node_list)
                     child_list.append(x)
                     child = Node(child_list, objective_function(child_list,self.flowList, self.distanceList))
+
                     if child.value > self.upperBound: ##jeśli wartość tymczasowego rozwiazanie jest wieksza od upperBound nie rozwijaj drzewa dalej
                         continue
+
                     self.resolutionsQueue.put(child)
 
         return 0
