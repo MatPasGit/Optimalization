@@ -34,7 +34,19 @@ class BranchAndBound:
 
 
     def initUpperBound(self):
-        return 0
+        best = 0
+        for x in range(0,9):
+            problem_list = init_problem_instance(self.size)
+
+            if x == 0:
+                best =  objective_function(problem_list, self.flowList, self.distanceList)
+                continue
+
+            problem_value = objective_function(problem_list, self.flowList, self.distanceList)
+            if problem_value >= best:
+                best = problem_value
+
+        self.upperBound = best
 
     def countUpperBound(self):
         return 0
@@ -45,8 +57,12 @@ class BranchAndBound:
         #UB count
         UB=0 #DO POPRAWY JAK PIERON
         #Queue
+
+        #inicjowanie potencjalnie najlepszego rozwiazania
+        self.initUpperBound()
+
         for x in range(0, self.size ):
-            temp_instance=Node([],UB) #TU POWINNO SIE LICZYC PIERWSZA WARTOSC ZAMIAST UB
+            temp_instance=Node([x],objective_function([x],self.flowList, self.distanceList)) #TU POWINNO SIE LICZYC PIERWSZA WARTOSC ZAMIAST UB
             self.resolutionsQueue.put(temp_instance)
 
         while( self.resolutionsQueue.empty() != True ):
