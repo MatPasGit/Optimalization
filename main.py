@@ -31,13 +31,18 @@ if __name__ == '__main__':
     #w - macierz przeplywów
     #d - macierz odległości
     w,d = generatorInstancji(20, problem_size)
-    print(np.matrix(w))
-    print(np.matrix(d))
+    #print(np.matrix(w))
+    #print(np.matrix(d))
 
     instance = init_problem_instance(problem_size)
     result = objective_function(instance, w,d)
+
+    lets_solve = BranchAndBound(instance, w, d)
+    lets_solve.solve()
     print(instance)
-    print(result)
+    print("resolution:" , lets_solve.upperBound)
+    print("instance: ", lets_solve.instance)
+    print("how much similar results? : ", lets_solve.same_value_solution)
 
 #implementację metody dokładnej(B & B) dla zadanego problemu(maksymalnie + 2.0 do oceny),
 #implementację metody przybliżonej(BS) dla zadanego problemu(maksymalnie + 1.0 do oceny),

@@ -76,11 +76,11 @@ class BranchAndBound:
 
             else: ##jeśli nie jest liściem
                 for x in range(0,self.size):
-                    if x in instance: #jesli zaklad zostal juz przydzielony pomiń
+                    if x in instance.node_list: #jesli zaklad zostal juz przydzielony pomiń
                         continue
 
                     child_list = instance.node_list
-                    child_list.append()
+                    child_list.append(x)
                     child = Node(child_list, objective_function(child_list,self.flowList, self.distanceList))
                     if child.value > self.upperBound: ##jeśli wartość tymczasowego rozwiazanie jest wieksza od upperBound nie rozwijaj drzewa dalej
                         continue
