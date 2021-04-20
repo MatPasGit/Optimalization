@@ -72,5 +72,3 @@ class BranchAndBound:
                         continue
 
                     self.resolutionsQueue.put(child)
-
-

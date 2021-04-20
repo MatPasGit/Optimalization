@@ -62,7 +62,7 @@ if __name__ == '__main__':
         print("BS instance: ", lets_solveBS.instance)
         print("BS how much similar results? : ", lets_solveBS.same_value_solution)
 
-    argumenty = np.linspace(3,3+zakres,zakres)
+    argumenty = np.linspace(3,2+zakres,zakres)
 
     plt.plot(argumenty, wynikiBBtime, label="B&B")
     plt.plot(argumenty, wynikiBStime, label="BS")
@@ -139,8 +139,3 @@ if __name__ == '__main__':
     plt.legend()
     plt.savefig("WykresJakosciZmienneZiarno.jpg", dpi=72)
     plt.show()
-
-#implementację metody dokładnej(B & B) dla zadanego problemu(maksymalnie + 2.0 do oceny),
-#implementację metody przybliżonej(BS) dla zadanego problemu(maksymalnie + 1.0 do oceny),
-#jakość dolnych i górnych ograniczeń(maksymalnie + 1.0 do oceny),
-#proste badania porównawcze(jakość/wydajność/zakres zastosowania) obu algorytmów(maksymalnie + 1.0 do oceny).
