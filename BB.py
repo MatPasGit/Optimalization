@@ -10,7 +10,7 @@ class BranchAndBound:
     flowList =[]
     distanceList=[]
     size = 0
-    same_value_solution=0
+    same_value_solution = 0
 
     upperBound =0
     resolutionsQueue = queue.LifoQueue()
@@ -80,4 +80,4 @@ class BranchAndBound:
 
                     self.resolutionsQueue.put(child)
 
-        return 0
+

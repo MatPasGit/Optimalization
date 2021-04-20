@@ -1,0 +1,116 @@
+#imports
+import copy
+import queue
+from functions import *
+from Node import *
+
+class BS:
+
+    instance = []
+    flowList =[]
+    distanceList=[]
+    size = 0
+    same_value_solution = 0
+
+    upperBound =0
+    resolutionsQueue = queue.Queue()
+
+    percentage_acceptable = 60
+
+    #methods
+
+    def  __init__(self, initRandomInstance,w,d):
+        self.instance = initRandomInstance
+        self.flowList = w
+        self.distanceList = d
+        self.size = len(w)
+        self.initLowerBound()
+
+    def initLowerBound(self):
+        self.lowerBound = objective_function(self.instance, self.flowList, self.distanceList)
+
+    def initUpperBound(self):
+        best = 0
+        for x in range(0, 9):
+            problem_list = init_problem_instance(self.size)
+
+            if x == 0:
+                best = objective_function(problem_list, self.flowList, self.distanceList)
+                continue
+
+            problem_value = objective_function(problem_list, self.flowList, self.distanceList)
+            if problem_value >= best:
+                best = problem_value
+
+        self.upperBound = best
+
+
+
+    def solve(self):
+
+        #inicjowanie potencjalnie najlepszego rozwiazania
+        self.initUpperBound()
+
+        for x in range(0, self.size ): #dodaj pierwsze node'y
+            temp_instance=Node([x], objective_function([x],self.flowList, self.distanceList))
+            self.resolutionsQueue.put(temp_instance)
+
+        while( self.resolutionsQueue.empty() != True ):
+
+            instance = self.resolutionsQueue.get()
+
+            if(len(instance.node_list) == self.size): #jesli jest lisciem
+                if instance.value < self.upperBound : # jezeli rozwiazanie lepsze to je zapisz
+                    self.instance = copy.copy(instance.node_list)
+                    self.upperBound = copy.copy(instance.value)
+                    self.same_value_solution = 0
+                    print("New value: ", self.upperBound, "New best sequence", self.instance)
+                if instance.value == self.upperBound:
+                    self.same_value_solution += 1
+
+            else: ##jeśli nie jest liściem
+
+                bs_child_list  = []
+                for x in range(0,self.size):
+                    if x in instance.node_list: #jesli zaklad zostal juz przydzielony pomiń
+                        continue
+
+
+                    child_list = copy.copy(instance.node_list)
+                    child_list.append(x)
+                    bs_child_list.append(Node(child_list, objective_function(child_list,self.flowList, self.distanceList)))
+                    ##dodanie wszystkich dzieci do listy
+                    best_kids_of_all_time = []
+
+            for bs in bs_child_list:## zachłannie przydzielana wartosc dla dziecka
+                best_child = []
+                best = 0
+
+                for x in range( 0, self.size): #ZNAJDZ NAJLEPSZE DZIECKI I ZAPISZ DO BEST I BESDT_CHILD
+                    if x in bs.node_list:
+                        continue
+
+                    child = copy.copy(bs.node_list)
+                    child.append(x)
+                    if best_child == [] : # jsli pusty to ustaw pierwszy
+                        best_child = copy.copy(child)
+                        best = objective_function(best_child, self.flowList, self.distanceList)
+                        c = objective_function(child, self.flowList, self.distanceList)
+
+                    if  c < best:
+                        best_child = copy.copy(child)
+                        best = c #Najlepsze dziecko dziecka
+
+                best_kids_of_all_time.append(Node(best_child, best))
+
+                best_kids_of_all_time.sort(key=Node.value,reverse=True)##SPRAWDZIC CZY DOBRZE SORTUJE
+
+                elements_count = (len(best_kids_of_all_time) * (self.percentage_acceptable/100) ) + 1
+
+                for x in range(0,elements_count):
+                    elem = copy.copy(best_kids_of_all_time[x])
+                    if elem.value > self.upperBound: ##jeśli wartość tymczasowego rozwiazanie jest wieksza od upperBound nie rozwijaj drzewa dalej
+                        continue
+                self.resolutionsQueue.put(elem)
+
+        return 0
