@@ -16,11 +16,11 @@ class BranchAndBound:
 
     #methods
 
-    def BranchAndBound(self, initRandomInstance,w,d, problem_size):
+    def BranchAndBound(self, initRandomInstance,w,d):
         self.instance = initRandomInstance
         self.flowList = w
         self.distanceList = d
-        self.size = problem_size
+        self.size = len(w)
         self.initLowerBound()
 
 
