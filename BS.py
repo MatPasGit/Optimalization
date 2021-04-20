@@ -105,7 +105,7 @@ class BS:
 
                     best_kids_of_all_time.append(Node(best_child, best))
 
-                newlist = sorted(best_kids_of_all_time, key=operator.attrgetter("value"), reverse=True)##SPRAWDZIC CZY DOBRZE SORTUJE
+                newlist = sorted(best_kids_of_all_time, key=operator.attrgetter("value"))
 
                 elements_count = int((len(newlist) * (self.percentage_acceptable/100) )) + 1
 
