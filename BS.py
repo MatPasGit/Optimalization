@@ -1,6 +1,10 @@
 #imports
 import copy
+import operator
 import queue
+
+from numpy import sort
+
 from functions import *
 from Node import *
 
@@ -103,12 +107,12 @@ class BS:
 
                 best_kids_of_all_time.append(Node(best_child, best))
 
-                best_kids_of_all_time.sort(key=Node.value,reverse=True)##SPRAWDZIC CZY DOBRZE SORTUJE
+                newlist = sorted(best_kids_of_all_time, key=operator.attrgetter("value"), reverse=True)##SPRAWDZIC CZY DOBRZE SORTUJE
 
-                elements_count = (len(best_kids_of_all_time) * (self.percentage_acceptable/100) ) + 1
+                elements_count = int((len(newlist) * (self.percentage_acceptable/100) )) + 1
 
                 for x in range(0,elements_count):
-                    elem = copy.copy(best_kids_of_all_time[x])
+                    elem = copy.copy(newlist[x])
                     if elem.value > self.upperBound: ##jeśli wartość tymczasowego rozwiazanie jest wieksza od upperBound nie rozwijaj drzewa dalej
                         continue
                 self.resolutionsQueue.put(elem)

@@ -11,3 +11,6 @@ class Node:
 
     def setNodelist(self, node_list):
         self.node_list = node_list
+
+    def getNodeValue(self):
+        return self.value
