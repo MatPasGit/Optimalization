@@ -16,7 +16,7 @@ class BranchAndBound:
 
     #methods
 
-    def BranchAndBound(self, initRandomInstance,w,d):
+    def  __init__(self, initRandomInstance,w,d):
         self.instance = initRandomInstance
         self.flowList = w
         self.distanceList = d

@@ -2,7 +2,7 @@ class Node:
     value = 0
     node_list = []
 
-    def Node(self, node_list, value):
+    def __init__(self, node_list, value):
         self.value = value
         self.node_list = node_list
 
