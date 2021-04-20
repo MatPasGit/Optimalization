@@ -8,7 +8,7 @@ from RandomNumberGenerator import *
 import numpy as np
 
 #global vars
-problem_size=7
+problem_size=9
 
 def generatorInstancji(Z,n):
     generator = RandomNumberGenerator(Z)
@@ -47,9 +47,9 @@ if __name__ == '__main__':
     lets_solveBS = BS(instance, w, d)
     lets_solveBS.solve()
 
-    print("BS resolution:" , lets_solve.upperBound)
-    print("BS instance: ", lets_solve.instance)
-    print("BS how much similar results? : ", lets_solve.same_value_solution)
+    print("BS resolution:" , lets_solveBS.upperBound)
+    print("BS instance: ", lets_solveBS.instance)
+    print("BS how much similar results? : ", lets_solveBS.same_value_solution)
 
 #implementację metody dokładnej(B & B) dla zadanego problemu(maksymalnie + 2.0 do oceny),
 #implementację metody przybliżonej(BS) dla zadanego problemu(maksymalnie + 1.0 do oceny),

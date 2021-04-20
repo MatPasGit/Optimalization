@@ -73,39 +73,38 @@ class BS:
                     self.same_value_solution += 1
 
             else: ##jeśli nie jest liściem
-
+                best_kids_of_all_time = []
                 bs_child_list  = []
-                for x in range(0,self.size):
+                for x in range(0,self.size): #kolejne dzieci
                     if x in instance.node_list: #jesli zaklad zostal juz przydzielony pomiń
                         continue
-
 
                     child_list = copy.copy(instance.node_list)
                     child_list.append(x)
                     bs_child_list.append(Node(child_list, objective_function(child_list,self.flowList, self.distanceList)))
                     ##dodanie wszystkich dzieci do listy
-                    best_kids_of_all_time = []
 
-            for bs in bs_child_list:## zachłannie przydzielana wartosc dla dziecka
-                best_child = []
-                best = 0
 
-                for x in range( 0, self.size): #ZNAJDZ NAJLEPSZE DZIECKI I ZAPISZ DO BEST I BESDT_CHILD
-                    if x in bs.node_list:
-                        continue
+                for bs in bs_child_list:## zachłannie przydzielana wartosc dla dziecka dziecka
+                    best_child = []
+                    best = 0
 
-                    child = copy.copy(bs.node_list)
-                    child.append(x)
-                    if best_child == [] : # jsli pusty to ustaw pierwszy
-                        best_child = copy.copy(child)
-                        best = objective_function(best_child, self.flowList, self.distanceList)
-                        c = objective_function(child, self.flowList, self.distanceList)
+                    for x in range( 0, self.size): #ZNAJDZ NAJLEPSZE DZIECKO I ZAPISZ DO BEST I BEST_CHILD
+                        if x in bs.node_list:
+                            continue
 
-                    if  c < best:
-                        best_child = copy.copy(child)
-                        best = c #Najlepsze dziecko dziecka
+                        child = copy.copy(bs.node_list)
+                        child.append(x)
+                        if best_child == [] : # jesli pusty to ustaw pierwszy
+                            best_child = copy.copy(child)
+                            best = objective_function(best_child, self.flowList, self.distanceList)
+                            c = objective_function(child, self.flowList, self.distanceList)
 
-                best_kids_of_all_time.append(Node(best_child, best))
+                        if  c < best:
+                            best_child = copy.copy(child)
+                            best = c #Najlepsze dziecko dziecka
+
+                    best_kids_of_all_time.append(Node(best_child, best))
 
                 newlist = sorted(best_kids_of_all_time, key=operator.attrgetter("value"), reverse=True)##SPRAWDZIC CZY DOBRZE SORTUJE
 
