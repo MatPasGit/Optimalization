@@ -1,6 +1,7 @@
 #imports
 import queue
 from functions import *
+from Node import *
 
 class BranchAndBound:
 
@@ -44,7 +45,7 @@ class BranchAndBound:
         UB=0 #DO POPRAWY JAK PIERON
         #Queue
         for x in range(0, self.size ):
-            temp_instance=[[x],UB] #TU POWINNO SIE LICZYC PIERWSZA WARTOSC ZAMIAST UB
+            temp_instance=Node([],UB) #TU POWINNO SIE LICZYC PIERWSZA WARTOSC ZAMIAST UB
             self.resolutionsQueue.put(temp_instance)
 
         while( self.resolutionsQueue.empty() != True ):
@@ -52,14 +53,20 @@ class BranchAndBound:
             instance = self.resolutionsQueue.get()
 
             # if is leave
-            if(len(instance) == self.size):
+            if(len(instance) == self.size): #jesli jest lisciem
                 inst_value = objective_function(instance,self.flowList, self.distanceList)
                 if( inst_value < UB ):
                     resolution  = instance
                     UB  = inst_value
             else:
                 for x in range(0,self.size):
-                    #uzupełnij dzieci poprzedniego ale dupiato narazie to jest
+                    if x in instance: #jesli zaklad zostal juz przydzielony
+                        continue
+                    child_list = instance.node_list
+                    child_list.append()
+                    child = Node(child_list, objective_function(child_list,self.flowList, self.distanceList ))
+                    self.resolutionsQueue.put()
+
 
 
             return 0
