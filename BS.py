@@ -23,10 +23,11 @@ class BS:
 
     #methods
 
-    def  __init__(self,w,d):
+    def  __init__(self,w,d,percent):
         self.flowList = w
         self.distanceList = d
         self.size = len(w)
+        self.percentage_acceptable = percent
 
     def initUpperBound(self):
         best = 0
@@ -112,3 +113,51 @@ class BS:
                 self.resolutionsQueue.put(elem)
 
         return 0
+
+
+    def solveSecond(self):
+
+            #inicjowanie potencjalnie najlepszego rozwiazania
+            self.initUpperBound()
+
+            for x in range(0, self.size ): #dodaj pierwsze node'y
+                temp_instance=Node([x], objective_function([x],self.flowList, self.distanceList))
+                self.resolutionsQueue.put(temp_instance)
+
+            while( self.resolutionsQueue.empty() != True ):
+
+                instance = self.resolutionsQueue.get()
+
+                if(len(instance.node_list) == self.size): #jesli jest lisciem
+                    if instance.value < self.upperBound : # jezeli rozwiazanie lepsze to je zapisz
+                        self.instance = copy.copy(instance.node_list)
+                        self.upperBound = copy.copy(instance.value)
+                        self.same_value_solution = 0
+                        print("New value: ", self.upperBound, "New best sequence", self.instance)
+                    if instance.value == self.upperBound:
+                        self.same_value_solution += 1
+
+                else: ##jeśli nie jest liściem
+                    bs_child_list  = []
+                    for x in range(0,self.size): #kolejne dzieci
+                        if x in instance.node_list: #jesli zaklad zostal juz przydzielony pomiń
+                            continue
+
+                        child_list = copy.copy(instance.node_list)
+                        child_list.append(x)
+                        bs_child_list.append(Node(child_list, objective_function(child_list,self.flowList, self.distanceList)))
+                        ##dodanie wszystkich dzieci do listy
+
+
+                    newlist = sorted(bs_child_list, key=operator.attrgetter("value"))
+                    elements_count = int((len(newlist) * (self.percentage_acceptable/100) )) + 1
+
+                    for x in range(0,elements_count):
+                        elem = copy.copy(newlist[x])
+                        if elem.value > self.upperBound: ##jeśli wartość tymczasowego rozwiazanie jest wieksza od upperBound nie rozwijaj drzewa dalej
+                            continue
+                    self.resolutionsQueue.put(elem)
+
+            return 0
+
+
