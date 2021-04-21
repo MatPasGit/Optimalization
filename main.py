@@ -249,7 +249,7 @@ if __name__ == '__main__':
             print("BS how much similar results? : ",
                   lets_solveBSSecond.same_value_solution)
 
-            table.append([percent, (lets_solveBSSecond.upperBound * 100 / lets_solve.upperBound) - 100 , problem_size])
+            table.append([percent, ((lets_solveBSSecond.upperBound - lets_solve.upperBound)* 100)/lets_solve.upperBound , problem_size])
 
     plt.plot(argumenty, wynikiBBtime, label="B&B")
     plt.plot(argumenty, wynikiBStime[::7], label="BS - wnuki - 20")
