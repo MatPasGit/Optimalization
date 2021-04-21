@@ -1,4 +1,5 @@
-#Quadratic Assignment Problem QAP
+# Quadratic Assignment Problem QAP
+
 
 from functions import *
 from BB import *
@@ -8,8 +9,9 @@ import numpy as np
 from matplotlib import cm
 import matplotlib.pyplot as plt
 import time
+from tabulate import tabulate
 
-def generatorInstancji(Z,n):
+def generatorInstancji(Z, n):
     generator = RandomNumberGenerator(Z)
     d = []
     d = [[0 for i in range(n)] for j in range(n)]
@@ -23,24 +25,25 @@ def generatorInstancji(Z,n):
                 d[j][i] = d[i][j]
                 w[i][j] = generator.nextInt(1, 50)
                 w[j][i] = w[i][j]
-    return w,d
+    return w, d
+
 
 if __name__ == '__main__':
 
-    wynikiBBtime=[]
-    wynikiBStime=[]
+    wynikiBBtime = []
+    wynikiBStime = []
     wynikiBSSecondtime = []
-    wynikiBBpoints=[]
-    wynikiBSpoints=[]
+    wynikiBBpoints = []
+    wynikiBSpoints = []
     wynikiBSSecondpoints = []
 
-    zakres=7
-    for problem_size in range(3,3+zakres):
+    zakres = 7
+    for problem_size in range(3, 3 + zakres):
 
-        #w - macierz przeplywów
-        #d - macierz odległości
-        w,d = generatorInstancji(20, problem_size)
-        #print(np.matrix(w))
+        # w - macierz przeplywów
+        # d - macierz odległości
+        w, d = generatorInstancji(20, problem_size)
+        # print(np.matrix(w))
 
         lets_solve = BranchAndBound(w, d)
         start = time.time()
@@ -49,7 +52,7 @@ if __name__ == '__main__':
         wynikiBBtime.append(end - start)
         wynikiBBpoints.append(lets_solve.upperBound)
 
-        print("resolution:" , lets_solve.upperBound)
+        print("resolution:", lets_solve.upperBound)
         print("instance: ", lets_solve.instance)
         print("how much similar results? : ", lets_solve.same_value_solution)
 
@@ -61,7 +64,7 @@ if __name__ == '__main__':
             wynikiBStime.append(end - start)
             wynikiBSpoints.append(lets_solveBS.upperBound)
 
-            print("BS resolution:" , lets_solveBS.upperBound)
+            print("BS resolution:", lets_solveBS.upperBound)
             print("BS instance: ", lets_solveBS.instance)
             print("BS how much similar results? : ", lets_solveBS.same_value_solution)
 
@@ -75,9 +78,9 @@ if __name__ == '__main__':
             print("BS resolution:", lets_solveBSSecond.upperBound)
             print("BS instance: ", lets_solveBSSecond.instance)
             print("BS how much similar results? : ",
-                lets_solveBSSecond.same_value_solution)
+                  lets_solveBSSecond.same_value_solution)
 
-    argumenty = np.linspace(3,2+zakres,zakres)
+    argumenty = np.linspace(3, 2 + zakres, zakres)
 
     plt.plot(argumenty, wynikiBBtime, label="B&B")
     plt.plot(argumenty, wynikiBStime[::7], label="BS - wnuki - 20")
@@ -131,7 +134,6 @@ if __name__ == '__main__':
     plt.legend()
     plt.savefig("WykresCzasuStaleZiarnoBSDzieci.jpg", dpi=72)
     plt.show()
-
 
     plt.plot(argumenty, wynikiBBpoints, label="B&B")
     plt.plot(argumenty, wynikiBSpoints[::7], label="BS - wnuki - 20")
@@ -198,12 +200,14 @@ if __name__ == '__main__':
     wynikiBSSecondpoints.clear()
     Z = RandomNumberGenerator(100)
 
-    for problem_size in range(3, 3+zakres):
+    table = []
+    table.append(["percentage of best kids ","percentage away from proper value","problem size" ])
+    for problem_size in range(3, 3 + zakres):
 
-        #w - macierz przeplywów
-        #d - macierz odległości
-        w, d = generatorInstancji(Z.nextInt(10,100), problem_size)
-        #print(np.matrix(w))
+        # w - macierz przeplywów
+        # d - macierz odległości
+        w, d = generatorInstancji(Z.nextInt(10, 100), problem_size)
+        # print(np.matrix(w))
 
         lets_solve = BranchAndBound(w, d)
         start = time.time()
@@ -217,7 +221,7 @@ if __name__ == '__main__':
         print("how much similar results? : ", lets_solve.same_value_solution)
 
         for percent in range(20, 90, 10):
-            lets_solveBS = BS(w, d,percent)
+            lets_solveBS = BS(w, d, percent)
             start = time.time()
             lets_solveBS.solve()
             end = time.time()
@@ -240,6 +244,8 @@ if __name__ == '__main__':
             print("BS instance: ", lets_solveBSSecond.instance)
             print("BS how much similar results? : ",
                   lets_solveBSSecond.same_value_solution)
+
+            table.append([percent, (lets_solveBS.upperBound * 100 / lets_solve.upperBound) - 100 , problem_size])
 
     plt.plot(argumenty, wynikiBBtime, label="B&B")
     plt.plot(argumenty, wynikiBStime[::7], label="BS - wnuki - 20")
@@ -293,9 +299,6 @@ if __name__ == '__main__':
     plt.legend()
     plt.savefig("WykresCzasuZmienneZiarnoBSDzieci.jpg", dpi=72)
     plt.show()
-
-
-
 
     plt.plot(argumenty, wynikiBBpoints, label="B&B")
     plt.plot(argumenty, wynikiBSpoints[::7], label="BS - wnuki - 20")
@@ -353,3 +356,4 @@ if __name__ == '__main__':
     plt.legend()
     plt.savefig("WykresJakosciZmienneZiarnoBSDzieci.jpg", dpi=72)
     plt.show()
+    print(tabulate(table))
