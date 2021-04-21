@@ -38,6 +38,8 @@ if __name__ == '__main__':
     wynikiBSSecondpoints = []
 
     zakres = 7
+    table_niezmienne=[]
+    table_niezmienne.append(["percentage of best kids ", "percentage away from proper value", "problem size(niezmienne ziarno)"])
     for problem_size in range(3, 3 + zakres):
 
         # w - macierz przeplywów
@@ -79,6 +81,8 @@ if __name__ == '__main__':
             print("BS instance: ", lets_solveBSSecond.instance)
             print("BS how much similar results? : ",
                   lets_solveBSSecond.same_value_solution)
+            table_niezmienne.append([percent, ((lets_solveBSSecond.upperBound - lets_solve.upperBound)* 100)/lets_solve.upperBound , problem_size])
+
 
     argumenty = np.linspace(3, 2 + zakres, zakres)
 
@@ -201,7 +205,7 @@ if __name__ == '__main__':
     Z = RandomNumberGenerator(100)
 
     table = []
-    table.append(["percentage of best kids ","percentage away from proper value","problem size" ])
+    table.append(["percentage of best kids ","percentage away from proper value","problem size - zmienne ziarno" ])
     for problem_size in range(3, 3 + zakres):
 
         # w - macierz przeplywów
@@ -245,7 +249,7 @@ if __name__ == '__main__':
             print("BS how much similar results? : ",
                   lets_solveBSSecond.same_value_solution)
 
-            table.append([percent, (lets_solveBS.upperBound * 100 / lets_solve.upperBound) - 100 , problem_size])
+            table.append([percent, (lets_solveBSSecond.upperBound * 100 / lets_solve.upperBound) - 100 , problem_size])
 
     plt.plot(argumenty, wynikiBBtime, label="B&B")
     plt.plot(argumenty, wynikiBStime[::7], label="BS - wnuki - 20")
@@ -357,3 +361,4 @@ if __name__ == '__main__':
     plt.savefig("WykresJakosciZmienneZiarnoBSDzieci.jpg", dpi=72)
     plt.show()
     print(tabulate(table))
+    print(tabulate(table_niezmienne))
